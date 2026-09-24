@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2026 추석 차량 출발 타이밍 선정</title>
+<meta name="description" content="추석 당일(9/25) 출발 시각별 고속도로 예상 소요시간. 출발지·도착지를 고르면 언제 떠나야 덜 막히는지 바로 보여줍니다.">
+<meta property="og:title" content="2026 추석 차량 출발 타이밍 선정">
+<meta property="og:description" content="9/25 추석 당일, 몇 시에 출발해야 덜 막힐까? 시간대별 예상 소요시간 한눈에 보기">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A6E4A">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+
+<!-- PostHog -->
+<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init('phc_mbfRq88mqShgKEyy6wqkpPd6Sqxh6NqRcEpy5wf8CQnW', {
+  api_host: 'https://us.i.posthog.com',   // EU 프로젝트면 https://eu.i.posthog.com
+  person_profiles: 'identified_only',
+  capture_pageview: true,
+  autocapture: true
+});
+posthog.register({ dataset: 'chuseok-2026-09-25', vehicle: 'car' });
+</script>
+
+<style>
+:root{
+  --bg:#EEF2F0; --card:#FFFFFF; --ink:#15211C; --sub:#5B6962; --line:#DCE3DF;
+  --sign:#0A6E4A; --sign-edge:#F4F8F6;
+  --good:#1E9E58; --mid:#E09A0B; --bad:#D9443F;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1512; --card:#17201C; --ink:#E6EEEA; --sub:#93A29B; --line:#26322D;
+    --sign:#0B7A52; --sign-edge:#DDEBE4;
+    --good:#34C27A; --mid:#F0B232; --bad:#F06A64;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1512; --card:#17201C; --ink:#E6EEEA; --sub:#93A29B; --line:#26322D;
+  --sign:#0B7A52; --sign-edge:#DDEBE4;
+  --good:#34C27A; --mid:#F0B232; --bad:#F06A64;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0;overflow:hidden}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent;
+}
+.app{
+  height:100%; max-width:560px; margin:0 auto;
+  display:flex; flex-direction:column; gap:10px;
+  padding:10px 14px 8px;
+}
+
+/* 고속도로 표지판 헤더 */
+.sign{
+  background:var(--sign); color:#fff; border-radius:10px;
+  padding:10px 14px 9px;
+  box-shadow: inset 0 0 0 3px var(--sign), inset 0 0 0 5px var(--sign-edge);
+}
+.sign{display:flex;align-items:center;gap:10px}
+.sign>div{flex:1;min-width:0}
+.share{
+  flex:none;background:#fff;color:var(--sign);border:0;border-radius:8px;
+  padding:9px 14px;font:inherit;font-size:14px;font-weight:800;cursor:pointer
+}
+.share:active{transform:scale(.95)}
+.share:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.toast{
+  position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);
+  transform:translate(-50%,12px);opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--bg);font-size:14px;font-weight:600;
+  padding:10px 16px;border-radius:999px;transition:opacity .2s,transform .2s;z-index:10
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sign h1{margin:0;font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.sign p{margin:2px 0 0;font-size:12px;opacity:.88;letter-spacing:-.01em}
+
+.route{display:grid;grid-template-columns:1fr 40px 1fr;gap:8px;align-items:end}
+.field{display:flex;flex-direction:column;gap:3px}
+.field span{font-size:11px;color:var(--sub);padding-left:2px}
+select{
+  appearance:none;-webkit-appearance:none; width:100%;
+  font:inherit; font-size:16px; font-weight:700; color:var(--ink);
+  background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23889' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border:1.5px solid var(--line); border-radius:10px; padding:10px 30px 10px 12px;
+}
+select:focus-visible,button:focus-visible{outline:2px solid var(--sign);outline-offset:2px}
+.swap{
+  width:40px;height:44px;border-radius:10px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);font-size:18px;cursor:pointer
+}
+.swap:active{transform:scale(.94)}
+
+.verdict{
+  display:flex;align-items:center;gap:10px;
+  background:var(--card);border-radius:10px;padding:9px 12px;
+  border-left:5px solid var(--good);
+}
+.verdict b{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.verdict small{display:block;font-size:11.5px;color:var(--sub);margin-top:1px}
+
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{background:var(--card);border-radius:10px;padding:8px 12px}
+.stat .k{font-size:11.5px;color:var(--sub)}
+.stat .v{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat .h{font-size:11.5px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat.peak .v{color:var(--bad)}
+
+.chartbox{
+  flex:1;min-height:0;position:relative;
+  background:var(--card);border-radius:10px;padding:26px 6px 2px 2px;
+}
+.chartbox .lbl{position:absolute;top:7px;left:12px;font-size:12px;font-weight:700;color:var(--sub)}
+.chartbox .tip{position:absolute;top:7px;right:12px;font-size:11px;color:var(--sub)}
+.chartbox canvas{touch-action:none;cursor:crosshair}
+
+.foot{font-size:10.5px;color:var(--sub);line-height:1.45;text-align:center;padding:0 4px}
+
+/* 광고 자리: 코드 넣으면 display:block 으로 */
+#ad-slot{display:none;height:50px;flex:none;border-radius:8px;overflow:hidden}
+
+@media (max-height:640px){
+  .sign p{display:none}
+  .stat .v{font-size:19px}
+  .verdict{padding:7px 12px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="sign">
+    <div>
+      <h1>2026 추석 차량 출발 타이밍 선정</h1>
+      <p>9월 25일(금) 추석 당일 · 출발 시각별 예상 소요시간</p>
+    </div>
+    <button class="share" id="share" aria-label="이 노선 공유하기">공유</button>
+  </header>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="route">
+    <label class="field"><span>출발</span><select id="from" aria-label="출발지"></select></label>
+    <button class="swap" id="swap" aria-label="출발지와 도착지 바꾸기">⇄</button>
+    <label class="field"><span>도착</span><select id="to" aria-label="도착지"></select></label>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+
+  <div class="pair">
+    <div class="stat" id="selCard"></div>
+    <div class="stat peak" id="peakCard"></div>
+  </div>
+
+  <div class="chartbox">
+    <div class="lbl" id="routeLbl"></div>
+    <div class="tip">그래프를 눌러 시각 선택</div>
+    <canvas id="chart" aria-label="출발 시각별 예상 소요시간 그래프" role="img"></canvas>
+  </div>
+
+  <div id="ad-slot"><!-- 광고 코드 --></div>
+
+  <div class="foot">한국도로공사 고속도로 교통정보 예보(9/24 밤 조회) · 요금소 출발 기준 승용차<br>예보치라 실제 교통 상황은 달라질 수 있어요.</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+// 인덱스 = 출발 시각(0~23시). out = 수도권→지방, back = 지방→수도권
+const RAW = {
+  '대전':{hub:'서울',
+    out:"1:30,1:30,1:30,1:30,1:30,2:00,2:40,3:10,3:40,3:50,3:50,4:00,4:00,4:00,3:50,3:20,3:10,2:50,2:10,1:50,1:30,1:30,1:30,1:30",
+    back:"1:30,1:30,1:30,1:30,1:30,1:30,1:30,1:47,2:00,3:00,3:40,4:00,4:20,4:20,4:30,4:20,4:10,3:50,3:30,3:20,3:10,2:33,2:44,2:10"},
+  '대구':{hub:'서울',
+    out:"3:30,3:30,3:30,3:30,3:30,3:40,5:00,6:00,7:00,7:40,8:10,8:10,7:40,7:30,6:40,5:50,5:10,4:40,3:50,3:30,3:30,3:30,3:30,3:30",
+    back:"3:30,3:30,3:30,3:30,3:30,3:30,4:20,5:40,6:10,6:50,8:00,7:50,8:00,7:40,7:10,6:40,6:00,5:40,5:30,4:50,4:20,3:49,3:30,3:30"},
+  '부산':{hub:'서울',
+    out:"4:30,4:30,4:30,4:30,4:30,4:40,6:00,7:00,8:00,8:40,9:10,9:10,8:40,8:30,7:40,6:50,6:10,5:40,4:50,4:30,4:30,4:30,4:30,4:30",
+    back:"4:30,4:30,4:30,4:30,4:30,4:30,5:20,6:40,7:10,7:50,9:00,8:50,9:00,8:40,8:10,7:40,7:00,6:40,6:30,5:50,5:20,4:49,4:30,4:30"},
+  '울산':{hub:'서울',
+    out:"4:10,4:10,4:10,4:10,4:10,4:20,5:40,6:40,7:40,8:20,8:50,8:50,8:20,8:10,7:20,6:30,5:50,5:20,4:30,4:10,4:10,4:10,4:10,4:10",
+    back:"4:10,4:10,4:10,4:10,4:10,4:10,5:00,6:20,6:50,7:30,8:40,8:30,8:40,8:20,7:50,7:20,6:40,6:20,6:10,5:30,5:00,4:29,4:10,4:10"},
+  '광주':{hub:'서울',
+    out:"3:20,3:20,3:20,3:20,3:20,4:20,5:00,5:10,5:40,6:10,6:30,6:40,6:20,6:00,5:40,5:20,5:00,4:20,3:40,3:20,3:20,3:20,3:20,3:20",
+    back:"3:20,3:20,3:20,3:20,3:20,3:20,3:20,4:10,5:40,6:50,7:20,7:10,7:00,6:50,6:40,6:30,6:10,5:50,5:30,5:10,5:00,4:50,4:07,4:10"},
+  '목포':{hub:'서서울',
+    out:"3:40,3:40,3:40,3:40,3:40,4:20,5:10,5:50,6:20,6:40,7:00,7:00,6:40,6:20,6:00,5:40,5:20,4:40,4:10,3:40,3:40,3:40,3:40,3:40",
+    back:"3:40,3:40,3:40,3:40,3:40,3:40,4:20,5:40,6:30,7:00,7:40,7:30,7:30,7:20,7:10,7:00,6:40,6:10,5:50,5:30,5:20,5:00,4:40,4:20"},
+  '강릉':{hub:'서울',
+    out:"2:40,2:40,2:40,2:40,2:40,2:40,3:00,3:20,3:50,4:10,4:40,5:00,4:50,4:40,4:20,4:00,3:30,2:50,2:40,2:40,2:40,2:40,2:40,2:40",
+    back:"2:40,2:40,2:40,2:40,2:40,2:40,2:40,2:40,3:00,3:30,3:50,4:00,4:00,4:10,4:10,4:20,4:20,3:50,3:20,3:00,2:50,2:40,2:40,2:40"},
+  '양양':{hub:'남양주',
+    out:"1:50,1:50,1:50,1:50,1:50,2:00,2:20,2:30,2:30,2:40,3:00,3:20,3:30,3:40,3:40,3:30,3:10,2:30,2:00,1:50,1:50,1:50,1:50,1:50",
+    back:"1:50,1:50,1:50,1:50,1:50,1:50,1:50,1:50,1:50,2:10,2:40,3:00,3:10,3:10,3:00,2:50,2:40,2:20,2:10,2:10,2:10,2:00,1:50,1:50"}
+};
+const CITIES = Object.keys(RAW);
+const METRO = '수도권';
+const parse = s => s.split(',').map(t => { t=t.trim(); if(!t) return null; const [h,m]=t.split(':').map(Number); return h*60+m; });
+const DATA = {};
+CITIES.forEach(c => DATA[c] = { hub:RAW[c].hub, out:parse(RAW[c].out), back:parse(RAW[c].back) });
+
+const fmt = m => `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;
+const fmtDiff = m => m>=60 ? `${Math.floor(m/60)}시간 ${m%60?m%60+'분':''}`.trim() : `${m}분`;
+const clock = m => { const d=Math.floor(m/1440), r=m%1440; return `${d?'다음날 ':''}${String(Math.floor(r/60)).padStart(2,'0')}:${String(r%60).padStart(2,'0')}`; };
+const track = (ev,p) => { try{ window.posthog && posthog.capture(ev,p); }catch(e){} };
+
+function kstHour(){
+  try{ return Number(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',hour:'numeric',hourCycle:'h23'}).format(new Date())); }
+  catch(e){ return new Date().getHours(); }
+}
+
+const $from=document.getElementById('from'), $to=document.getElementById('to');
+const state = { from:'부산', to:METRO, lastCity:'부산', hour:kstHour() };
+
+function fillFrom(){
+  $from.innerHTML = `<option value="${METRO}">서울·수도권</option>` + CITIES.map(c=>`<option value="${c}">${c}</option>`).join('');
+  $from.value = state.from;
+}
+function fillTo(){
+  if(state.from===METRO){
+    $to.innerHTML = CITIES.map(c=>`<option value="${c}">${c}</option>`).join('');
+    if(!CITIES.includes(state.to)) state.to = state.lastCity;
+  }else{
+    $to.innerHTML = `<option value="${METRO}">${DATA[state.from].hub}</option>`;
+    state.to = METRO;
+  }
+  $to.value = state.to;
+}
+function current(){
+  const outbound = state.from===METRO;
+  const city = outbound ? state.to : state.from;
+  const d = DATA[city];
+  return {
+    city, vals: outbound ? d.out : d.back,
+    origin: outbound ? d.hub : city, dest: outbound ? city : d.hub,
+    key: outbound ? `${d.hub}>${city}` : `${city}>${d.hub}`
+  };
+}
+
+function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+let colors = {};
+function readColors(){ colors = {good:css('--good'),mid:css('--mid'),bad:css('--bad'),sub:css('--sub'),line:css('--line'),card:css('--card'),ink:css('--ink')}; }
+
+function level(v,min){ if(v==null) return colors.sub; if(v<=min+20) return colors.good; if(v<=min*1.4) return colors.mid; return colors.bad; }
+
+function ranges(vals,min){
+  const ok = vals.map(v => v!=null && v<=min+20);
+  const out=[]; let s=null;
+  for(let i=0;i<=24;i++){
+    if(i<24 && ok[i]){ if(s===null) s=i; }
+    else if(s!==null){ out.push(s===i-1?`${s}시`:`${s}–${i-1}시`); s=null; }
+  }
+  return out.join(', ');
+}
+
+let chart;
+function render(){
+  const r = current(), vals = r.vals;
+  const nums = vals.filter(v=>v!=null);
+  const min = Math.min(...nums), max = Math.max(...nums);
+  const peakHour = vals.indexOf(max);
+
+  document.getElementById('routeLbl').textContent = `${r.origin} ▸ ${r.dest}`;
+  document.getElementById('verdict').innerHTML =
+    `<div><b>덜 막히는 출발: ${ranges(vals,min)}</b><small>이 시간대 출발 시 약 ${fmt(min)} 소요 (가장 빠른 수준)</small></div>`;
+  document.getElementById('peakCard').innerHTML =
+    `<div class="k">피크 ${peakHour}시 출발</div><div class="v">${fmt(max)}</div><div class="h">최단보다 ${fmtDiff(max-min)} 더 걸림</div>`;
+  renderSel();
+
+  const span = max - min;
+  const step = span <= 150 ? 30 : 60;
+  const yMin = Math.max(0, Math.floor((min-20)/step)*step);
+  const yMax = Math.ceil((max+10)/step)*step;
+
+  if(!chart){
+    chart = new Chart(document.getElementById('chart'), {
+      type:'line',
+      data:{ labels:[...Array(24).keys()], datasets:[{ data:vals }] },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        animation:{duration:350},
+        events:[],
+        plugins:{legend:{display:false},tooltip:{enabled:false}},
+        layout:{padding:{right:6}},
+        scales:{
+          x:{grid:{display:false},border:{color:colors.line},
+             ticks:{color:colors.sub,autoSkip:false,maxRotation:0,font:{size:11},callback:(v,i)=> i%3===0?`${i}시`:''}},
+          y:{grid:{color:colors.line},border:{display:false},
+             ticks:{color:colors.sub,font:{size:11},callback:v=>fmt(v)}}
+        }
+      },
+      plugins:[selLine]
+    });
+  }
+  const ds = chart.data.datasets[0];
+  Object.assign(ds, {
+    data: vals, spanGaps:true, tension:.35, borderWidth:3,
+    pointRadius: c => vals[c.dataIndex]==null ? 0 : (c.dataIndex===state.hour ? 7 : 3),
+    pointHoverRadius:0,
+    pointBackgroundColor: c => level(vals[c.dataIndex],min),
+    pointBorderColor: colors.card, pointBorderWidth:2,
+    segment:{
+      borderColor: c => level(Math.max(c.p0.parsed.y,c.p1.parsed.y),min),
+      borderDash: c => (c.p1DataIndex - c.p0DataIndex > 1) ? [5,5] : undefined
+    },
+    fill:true,
+    backgroundColor: c => {
+      const a = c.chart.chartArea; if(!a) return 'transparent';
+      const g = c.chart.ctx.createLinearGradient(0,a.top,0,a.bottom);
+      g.addColorStop(0, colors.bad+'2A'); g.addColorStop(1, colors.good+'08'); return g;
+    }
+  });
+  chart.options.scales.y.min = yMin; chart.options.scales.y.max = yMax;
+  chart.options.scales.y.ticks.stepSize = step;
+  chart.update();
+}
+
+function renderSel(){
+  const r = current(), v = r.vals[state.hour];
+  const nums = r.vals.filter(x=>x!=null), min = Math.min(...nums);
+  const el = document.getElementById('selCard');
+  if(v==null){
+    el.innerHTML = `<div class="k">${state.hour}시 출발</div><div class="v">–</div><div class="h">이 시간대 예보 없음</div>`;
+  }else{
+    const diff = v-min;
+    el.innerHTML = `<div class="k">${state.hour}시 출발하면</div><div class="v" style="color:${level(v,min)}">${fmt(v)}</div>`+
+      `<div class="h">도착 ${clock(state.hour*60+v)} · ${diff? '최단 +'+fmtDiff(diff) : '최단 시간'}</div>`;
+  }
+}
+
+const selLine = {
+  id:'selLine',
+  afterDatasetsDraw(c){
+    const x = c.scales.x.getPixelForValue(state.hour), a = c.chartArea, ctx = c.ctx;
+    ctx.save(); ctx.strokeStyle = colors.ink; ctx.globalAlpha=.35; ctx.setLineDash([3,4]); ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(x,a.top); ctx.lineTo(x,a.bottom); ctx.stroke(); ctx.restore();
+  }
+};
+
+// 그래프 탭/드래그로 시각 선택
+const cv = document.getElementById('chart');
+let scrubbing=false;
+function hourAt(e){
+  const rect = cv.getBoundingClientRect();
+  const i = Math.round(chart.scales.x.getValueForPixel(e.clientX - rect.left));
+  return Math.min(23, Math.max(0, i));
+}
+function pick(e){
+  const h = hourAt(e); if(h===state.hour) return;
+  state.hour = h; renderSel(); chart.update('none');
+}
+cv.addEventListener('pointerdown', e => { scrubbing=true; cv.setPointerCapture(e.pointerId); pick(e); });
+cv.addEventListener('pointermove', e => { if(scrubbing) pick(e); });
+const endScrub = () => {
+  if(!scrubbing) return; scrubbing=false;
+  const r=current(); track('hour_selected',{route:r.key, hour:state.hour, minutes:r.vals[state.hour]});
+};
+cv.addEventListener('pointerup', endScrub); cv.addEventListener('pointercancel', endScrub);
+
+$from.addEventListener('change', () => {
+  state.from = $from.value;
+  if(state.from!==METRO) state.lastCity = state.from;
+  fillTo(); render();
+  track('route_changed',{route:current().key, via:'from'});
+});
+$to.addEventListener('change', () => {
+  state.to = $to.value;
+  if(state.to!==METRO) state.lastCity = state.to;
+  render();
+  track('route_changed',{route:current().key, via:'to'});
+});
+document.getElementById('swap').addEventListener('click', () => {
+  const c = current().city;
+  if(state.from===METRO){ state.from=c; state.to=METRO; } else { state.from=METRO; state.to=c; }
+  $from.value = state.from; fillTo(); render();
+  track('route_changed',{route:current().key, via:'swap'});
+});
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => {
+  readColors();
+  if(chart){ const s=chart.options.scales; s.x.ticks.color=s.y.ticks.color=colors.sub; s.x.border.color=s.y.grid.color=colors.line; }
+  render();
+});
+
+// 공유 링크로 들어온 경우 같은 노선으로 열기
+const Q = new URLSearchParams(location.search);
+(function applyParams(){
+  const f = Q.get('from'), t = Q.get('to');
+  if(f===METRO && t && DATA[t]){ state.from=METRO; state.to=t; state.lastCity=t; }
+  else if(f && DATA[f]){ state.from=f; state.to=METRO; state.lastCity=f; }
+})();
+
+// 공유
+function toast(msg){
+  const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('on');
+  clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('on'),1800);
+}
+function shareUrl(){
+  const u = new URL(location.href); u.search=''; u.hash='';
+  u.searchParams.set('from',state.from); u.searchParams.set('to',state.to);
+  u.searchParams.set('utm_source','share');
+  return u.toString();
+}
+async function copyLink(text,url,route){
+  try{ await navigator.clipboard.writeText(`${text}\n${url}`); toast('링크를 복사했어요'); track('share_completed',{route,method:'copy'}); }
+  catch(e){ window.prompt('아래 링크를 복사하세요', url); track('share_completed',{route,method:'prompt'}); }
+}
+document.getElementById('share').addEventListener('click', async () => {
+  const r=current(), url=shareUrl();
+  const text=`${r.origin}→${r.dest}, 추석 당일 몇 시에 출발해야 덜 막힐까?`;
+  const native = !!navigator.share;
+  track('share_clicked',{route:r.key, method: native?'native':'copy'});
+  if(native){
+    try{ await navigator.share({title:document.title, text, url}); track('share_completed',{route:r.key,method:'native'}); }
+    catch(e){ if(e && e.name==='AbortError') track('share_cancelled',{route:r.key}); else copyLink(text,url,r.key); }
+  }else copyLink(text,url,r.key);
+});
+
+readColors(); fillFrom(); fillTo(); render();
+track('route_viewed_initial',{route:current().key, hour:state.hour, from_share: Q.get('utm_source')==='share'});
+</script>
+</body>
+</html>
