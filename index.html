@@ -203,7 +203,7 @@ select:focus-visible,button:focus-visible{outline:2px solid var(--sign);outline-
     <div class="ad-note">이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
   </div>
 
-  <div class="foot"><a href="https://www.roadplus.co.kr/forecast/predict/selectPredictView.do" target="_blank" rel="noopener" class="src">한국도로공사 교통예보</a>(9/24 밤 기준, 승용차) · <button class="about-link" id="aboutBtn">만든 이유 · 의견 보내기</button><br><span id="gapNote"></span>예보치라 실제 교통 상황은 달라질 수 있어요.</div>
+  <div class="foot"><a id="srcLink" href="https://play.google.com/store/apps/details?id=com.roadplus.android2" target="_blank" rel="noopener" class="src">한국도로공사 고속도로 교통정보 앱</a>(9/24 밤 기준, 승용차) · <button class="about-link" id="aboutBtn">만든 이유 · 의견 보내기</button><br><span id="gapNote"></span>예보치라 실제 교통 상황은 달라질 수 있어요.</div>
 </div>
 
 <div class="sheet-bg" id="about" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
@@ -544,6 +544,11 @@ function loadAd(){
 window.addEventListener('blur', () => {
   if(document.activeElement === $ad) track('ad_click',{route:current().key, date:state.date});
 });
+
+// 출처 링크: iOS면 App Store, 그 외는 Google Play
+const $src = document.getElementById('srcLink');
+if(/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)) $src.href = 'https://apps.apple.com/kr/app/id1343545208';
+$src.addEventListener('click', () => track('source_clicked',{store: $src.href.includes('apple') ? 'ios' : 'android'}));
 
 // 만든 이유 시트
 const $about = document.getElementById('about');
