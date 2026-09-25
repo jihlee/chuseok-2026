@@ -121,6 +121,7 @@ select:focus-visible{outline:none;border:2px solid var(--info);box-shadow:var(--
 .chartbox{flex:1;min-height:200px;position:relative;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:38px 6px 4px 2px;box-shadow:var(--sh-sub)}
 .chartbox .lbl{position:absolute;top:12px;left:12px;font-size:13px;font-weight:600;color:var(--ink)}
 .chartbox .modes{position:absolute;top:8px;right:8px;display:flex;gap:4px}
+.chartbox.arr{min-height:min(560px,72dvh)}   /* 도착시각 모드: 24시간 범위라 세로를 키우고 스크롤 허용 */
 .chartbox canvas{touch-action:none;cursor:crosshair}
 
 /* footer */
@@ -572,7 +573,9 @@ document.getElementById('modes').addEventListener('click', e => {
   const b = e.target.closest('button[data-mode]'); if(!b || b.dataset.mode===state.mode) return;
   state.mode = b.dataset.mode;
   document.querySelectorAll('#modes button').forEach(x => x.setAttribute('aria-pressed', x===b));
+  document.querySelector('.chartbox').classList.toggle('arr', state.mode==='arr');
   render();
+  if(state.mode==='arr') setTimeout(() => document.querySelector('.chartbox').scrollIntoView({behavior:'smooth', block:'start'}), 50);
   track('chart_mode_changed',{mode:state.mode, route:current().key, date:state.date});
 });
 
