@@ -12,9 +12,11 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:description" content="추석 연휴, 몇 시에 출발해야 덜 막힐까? 시간대별 예상 소요시간 한눈에 보기">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0A6E4A">
+<meta name="theme-color" content="#1E3A5F">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@500;700&family=Red+Hat+Display:wght@700&display=swap">
 
 <!-- PostHog -->
 <script>
@@ -29,140 +31,132 @@ posthog.register({ dataset: 'chuseok-2026', vehicle: 'car' });
 </script>
 
 <style>
+/* PulsePoint design tokens (dark only, 한글은 Pretendard) */
 :root{
-  --bg:#EEF2F0; --card:#FFFFFF; --ink:#15211C; --sub:#5B6962; --line:#DCE3DF;
-  --sign:#0A6E4A; --sign-edge:#F4F8F6;
-  --good:#1E9E58; --mid:#E09A0B; --bad:#D9443F;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0E1512; --card:#17201C; --ink:#E6EEEA; --sub:#93A29B; --line:#26322D;
-    --sign:#0B7A52; --sign-edge:#DDEBE4;
-    --good:#34C27A; --mid:#F0B232; --bad:#F06A64;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0E1512; --card:#17201C; --ink:#E6EEEA; --sub:#93A29B; --line:#26322D;
-  --sign:#0B7A52; --sign-edge:#DDEBE4;
-  --good:#34C27A; --mid:#F0B232; --bad:#F06A64;
+  color-scheme:light;
+  --navy:#1E3A5F; --navy-hv:#264A75; --info:#3B82F6;
+  --bg:#F8FAFC; --card:#FFFFFF; --card2:#F1F5F9; --line:#E2E8F0; --line-hv:#94A3B8;
+  --ink:#0F172A; --sub:#475569; --muted:#64748B; --alt:#E2E8F0;
+  --good:#22C55E; --mid:#F59E0B; --bad:#E63946; --good-ink:#15803D; --mid-ink:#B45309; --bad-ink:#C1121F;
+  --lane:#F59E0B;
+  --f-head:"Red Hat Display","Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --f-body:"Inter","Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"Pretendard Variable",Pretendard,monospace;
+  --sh-sub:0 1px 3px rgba(15,23,42,.08),0 0 8px rgba(30,58,95,.06);
+  --sh-md:0 4px 12px rgba(15,23,42,.12),0 0 16px rgba(30,58,95,.1);
+  --sh-over:0 16px 48px rgba(15,23,42,.25);
 }
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *,*::before,*::after{box-sizing:inherit}
-html,body{margin:0;min-height:100%}
-body{
-  background:var(--bg); color:var(--ink);
-  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
-  -webkit-font-smoothing:antialiased; -webkit-tap-highlight-color:transparent;
-}
-.app{
-  height:100vh; height:100dvh; max-width:560px; margin:0 auto;
-  display:flex; flex-direction:column; gap:10px;
-  padding:10px 14px 8px;
-}
+html,body{margin:0;min-height:100%;background:var(--bg)}
+body{word-break:keep-all;color:var(--ink);font-family:var(--f-body);font-size:14px;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+.app{height:100vh;height:100dvh;max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:12px;padding:12px 12px 8px}
+:focus-visible{outline:2px solid var(--info);outline-offset:2px}
 
-/* 고속도로 표지판 헤더 */
+/* header: 네이비 패널 + 표지판 이중 테두리 */
 .sign{
-  background:var(--sign); color:#fff; border-radius:10px;
-  padding:10px 14px 9px;
-  box-shadow: inset 0 0 0 3px var(--sign), inset 0 0 0 5px var(--sign-edge);
+  display:flex;align-items:center;gap:12px;background:var(--navy);border-radius:8px;padding:12px 14px;
+  box-shadow:inset 0 0 0 2px var(--navy),inset 0 0 0 3px rgba(241,245,249,.55),var(--sh-md)
 }
-.sign{display:flex;align-items:center;gap:10px}
 .sign>div{flex:1;min-width:0}
+.sign h1{color:#F1F5F9;margin:0;font-family:var(--f-head);font-weight:700;font-size:20px;line-height:1.3;letter-spacing:.01em}
+.sign p{margin:4px 0 0;font-size:13px;color:#CBD5E1}
 .share{
-  flex:none;background:#fff;color:var(--sign);border:0;border-radius:8px;
-  padding:9px 14px;font:inherit;font-size:14px;font-weight:800;cursor:pointer
+  flex:none;height:34px;padding:0 14px;border:1px solid rgba(255,255,255,.35);border-radius:4px;
+  background:rgba(255,255,255,.12);color:#F1F5F9;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s
 }
-.share:active{transform:scale(.95)}
-.share:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.share:hover{background:rgba(255,255,255,.22)}
+
 .toast{
-  position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);
-  transform:translate(-50%,12px);opacity:0;pointer-events:none;
-  background:var(--ink);color:var(--bg);font-size:14px;font-weight:600;
-  padding:10px 16px;border-radius:999px;transition:opacity .2s,transform .2s;z-index:10
+  position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translate(-50%,2px);opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--bg);font-size:12px;font-weight:600;padding:6px 10px;border-radius:4px;transition:opacity .1s,transform .1s;z-index:30
 }
 .toast.on{opacity:1;transform:translate(-50%,0)}
-.sign h1{margin:0;font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.25}
-.sign p{margin:2px 0 0;font-size:12px;opacity:.88;letter-spacing:-.01em}
 
-.dates{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:var(--line);padding:3px;border-radius:10px}
-.dates button{
-  font:inherit;font-size:14px;font-weight:700;border:0;border-radius:8px;padding:8px 0;
-  background:transparent;color:var(--sub);cursor:pointer
+/* filter chips */
+.dates{display:flex;gap:8px}
+.dates button,.chartbox .modes button{
+  height:28px;padding:0 10px;font:inherit;font-size:12px;font-weight:500;border-radius:4px;
+  border:1px solid #CBD5E1;background:var(--card2);color:var(--sub);cursor:pointer;transition:background .2s,color .2s
 }
-.dates button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.dates button[aria-selected="true"],.chartbox .modes button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#F1F5F9;font-weight:600}
+
+/* inputs */
 .route{display:grid;grid-template-columns:1fr 40px 1fr;gap:8px;align-items:end}
-.field{display:flex;flex-direction:column;gap:3px}
-.field span{font-size:11px;color:var(--sub);padding-left:2px}
+.field{display:flex;flex-direction:column}
+.field span{font-size:12px;font-weight:600;color:var(--sub);margin-bottom:4px}
 select{
-  appearance:none;-webkit-appearance:none; width:100%;
-  font:inherit; font-size:16px; font-weight:700; color:var(--ink);
-  background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23889' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 12px center;
-  border:1.5px solid var(--line); border-radius:10px; padding:10px 30px 10px 12px;
+  appearance:none;-webkit-appearance:none;width:100%;height:40px;font:inherit;font-size:16px;font-weight:600;color:var(--ink);
+  background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2364748B' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border:1px solid var(--line);border-radius:4px;padding:0 30px 0 12px;transition:border-color .2s
 }
-select:focus-visible,button:focus-visible{outline:2px solid var(--sign);outline-offset:2px}
-.swap{
-  width:40px;height:44px;border-radius:10px;border:1.5px solid var(--line);
-  background:var(--card);color:var(--ink);font-size:18px;cursor:pointer
-}
-.swap:active{transform:scale(.94)}
+select:hover{border-color:var(--line-hv)}
+select:focus-visible{outline:none;border:2px solid var(--info);box-shadow:var(--sh-sub)}
+.swap{width:40px;height:40px;border-radius:4px;border:1px solid #CBD5E1;background:var(--card2);color:#334155;font-size:16px;cursor:pointer}
+.swap:hover{color:var(--ink);background:var(--alt)}
 
-.verdict{
-  display:flex;align-items:center;gap:10px;
-  background:var(--card);border-radius:10px;padding:9px 12px;
-  border-left:5px solid var(--good);
-}
-.verdict b{font-size:15px;font-weight:800;letter-spacing:-.01em}
-.verdict small{display:block;font-size:11.5px;color:var(--sub);margin-top:1px}
+/* status chips */
+.chip{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;line-height:1.5;vertical-align:middle;border:1px solid}
+.chip.good{background:rgba(34,197,94,.12);color:var(--good-ink);border-color:rgba(34,197,94,.3)}
+.chip.mid{background:rgba(245,158,11,.15);color:var(--mid-ink);border-color:rgba(245,158,11,.3)}
+.chip.bad{background:rgba(230,57,70,.15);color:var(--bad-ink);border-color:rgba(230,57,70,.3)}
 
+.verdict{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid rgba(34,197,94,.3);border-radius:4px;padding:10px 12px;box-shadow:var(--sh-sub)}
+.verdict b{font-size:14px;font-weight:600}
+.verdict small{display:block;font-size:12px;color:var(--sub);margin-top:2px}
+
+/* vitals */
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stat{background:var(--card);border-radius:10px;padding:8px 12px}
-.stat .k{font-size:11.5px;color:var(--sub)}
-.stat .v{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;font-variant-numeric:tabular-nums}
-.stat .h{font-size:11.5px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.stat.peak .v{color:var(--bad)}
+.stat{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:10px 12px;box-shadow:var(--sh-sub)}
+.stat .k{font-size:12px;font-weight:600;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .v{font-family:var(--f-mono);font-size:26px;font-weight:700;line-height:1.2;margin-top:2px;white-space:nowrap}
+.stat .v .chip{font-family:var(--f-body);margin-left:2px;position:relative;top:-3px}
+.stat .v small{font-family:var(--f-body);font-size:13px;font-weight:600;color:var(--sub);margin:0 3px 0 1px}
+.stat .h{font-size:12px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.stat .h b{font-family:var(--f-mono);color:var(--ink);font-weight:500}
+.stat.peak{border-color:rgba(230,57,70,.3)}
+.stat.peak .v{color:var(--bad-ink)}
 
-.chartbox{
-  flex:1;min-height:200px;position:relative;
-  background:var(--card);border-radius:10px;padding:26px 6px 2px 2px;
-}
-.chartbox .lbl{position:absolute;top:7px;left:12px;font-size:12px;font-weight:700;color:var(--sub)}
-.chartbox .tip{position:absolute;top:7px;right:12px;font-size:11px;color:var(--sub)}
+/* chart panel */
+.chartbox{flex:1;min-height:200px;position:relative;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:38px 6px 4px 2px;box-shadow:var(--sh-sub)}
+.chartbox .lbl{position:absolute;top:12px;left:12px;font-size:13px;font-weight:600;color:var(--ink)}
+.chartbox .modes{position:absolute;top:8px;right:8px;display:flex;gap:4px}
 .chartbox canvas{touch-action:none;cursor:crosshair}
 
-.foot{font-size:10.5px;color:var(--sub);line-height:1.45;text-align:center;padding:0 4px}
-
+/* footer */
+.foot{font-size:11px;color:var(--muted);line-height:1.5;text-align:center;padding:0 4px}
 .foot a.src{color:var(--sub)}
-.about-link{background:none;border:0;padding:0;font:inherit;color:var(--sub);text-decoration:underline;cursor:pointer}
-.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:20}
+.about-link{background:none;border:0;padding:0;font:inherit;color:#2563EB;font-weight:600;cursor:pointer}
+
+/* modal */
+.sheet-bg{position:fixed;inset:0;background:rgba(15,23,42,.45);display:none;align-items:flex-end;justify-content:center;z-index:20}
 .sheet-bg.on{display:flex}
-.sheet{
-  background:var(--card);color:var(--ink);width:100%;max-width:560px;
-  border-radius:16px 16px 0 0;padding:22px 20px calc(env(safe-area-inset-bottom,0px) + 18px);
-  animation:up .22s ease-out
-}
-@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
-.sheet h2{margin:0 0 8px;font-size:17px;font-weight:800;letter-spacing:-.01em}
-.sheet p{margin:0 0 12px;font-size:15px;line-height:1.6}
-.sheet small{display:block;font-size:12px;color:var(--sub);line-height:1.5;margin-bottom:16px}
-.fb{border-top:1px solid var(--line);padding-top:14px;margin-bottom:8px}
-.fb-q{font-size:14px !important;font-weight:700;margin:0 0 8px !important}
+.sheet{background:var(--card);color:var(--ink);width:100%;max-width:560px;max-height:92dvh;overflow:auto;border:1px solid var(--line);border-bottom:0;border-radius:6px 6px 0 0;padding:20px 16px calc(env(safe-area-inset-bottom,0px) + 16px);box-shadow:var(--sh-over)}
+.sheet h2{margin:0 0 8px;font-family:var(--f-head);font-weight:700;font-size:20px}
+.sheet p{margin:0 0 12px;font-size:14px;line-height:1.6}
+.sheet small{display:block;font-size:12px;color:var(--sub);line-height:1.5;margin-bottom:8px}
+.fb{border-top:1px solid var(--line);padding-top:16px;margin:12px 0 8px}
+.fb-q{font-size:14px !important;font-weight:600;margin:0 0 8px !important}
 .thumbs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.thumbs button{font:inherit;font-size:14px;font-weight:600;padding:10px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
-.thumbs button[aria-pressed="true"]{border-color:var(--sign);background:var(--sign);color:#fff}
-.fb textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px;resize:none;margin-bottom:8px}
-.sheet .ghost{width:100%;padding:11px;border:0;background:none;color:var(--sub);font:inherit;font-size:14px;cursor:pointer}
-.sheet .close{width:100%;padding:13px;border:0;border-radius:10px;background:var(--sign);color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.thumbs button{height:34px;font:inherit;font-size:13px;font-weight:600;border-radius:4px;border:1px solid #CBD5E1;background:var(--card2);color:var(--sub);cursor:pointer}
+.thumbs button:hover{color:var(--ink)}
+.thumbs button[aria-pressed="true"]{border:2px solid var(--info);color:#F1F5F9;background:var(--navy)}
+.fb textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:4px;padding:8px 12px;resize:none;margin-bottom:8px}
+.fb textarea::placeholder{color:var(--muted)}
+.fb textarea:hover{border-color:var(--line-hv)}
+.fb textarea:focus{outline:none;border:2px solid var(--info);box-shadow:var(--sh-sub)}
+.sheet .close{width:100%;height:40px;border:0;border-radius:4px;background:var(--navy);color:#F1F5F9;font:inherit;font-size:14px;font-weight:600;cursor:pointer;box-shadow:var(--sh-sub)}
+.sheet .close:hover{background:var(--navy-hv)}
+.sheet .ghost{width:100%;height:34px;border:0;background:none;color:var(--sub);font:inherit;font-size:13px;font-weight:600;cursor:pointer;border-radius:4px}
+.sheet .ghost:hover{color:var(--ink);background:var(--card2)}
 
-/* 광고 자리: 코드 넣으면 display:block 으로 */
-#ad-slot{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px}
-#ad-slot iframe{display:block;border:0;height:60px;width:320px;max-width:100%;border-radius:8px;background:var(--card)}
-#ad-slot .ad-note{font-size:10px;color:var(--sub);line-height:1.3;text-align:center}
+/* ad */
+#ad-slot{flex:none;display:flex;flex-direction:column;align-items:center;gap:4px}
+#ad-slot iframe{display:block;border:0;height:60px;width:320px;max-width:100%;border-radius:4px;background:var(--card)}
+#ad-slot .ad-note{font-size:11px;color:var(--muted);line-height:1.3;text-align:center}
 
-@media (max-height:640px){
-  .sign p{display:none}
-  .stat .v{font-size:19px}
-  .verdict{padding:7px 12px}
-}
+@media (max-height:700px){ .sign p{display:none} .stat .v{font-size:22px} .app{gap:10px} }
+@media (max-width:380px){ .sign h1{font-size:18px} .chartbox .lbl{max-width:46%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -170,8 +164,8 @@ select:focus-visible,button:focus-visible{outline:2px solid var(--sign);outline-
 <div class="app">
   <header class="sign">
     <div>
-      <h1>2026 추석 고속도로, 언제 떠나면 덜 막힐까?</h1>
-      <p id="subline">9월 25일(금) 추석 당일 · 출발 시각별 예상 소요시간</p>
+      <h1>2026 추석 고속도로,<br>언제 떠나면 덜 막힐까?</h1>
+      <p id="subline">9월 25일(금) 추석 당일 · 시간대별 소요시간</p>
     </div>
     <button class="share" id="share" aria-label="이 노선 공유하기">공유</button>
   </header>
@@ -194,7 +188,10 @@ select:focus-visible,button:focus-visible{outline:2px solid var(--sign);outline-
 
   <div class="chartbox">
     <div class="lbl" id="routeLbl"></div>
-    <div class="tip">그래프를 눌러 시각 선택</div>
+    <div class="modes" id="modes" role="group" aria-label="그래프 기준">
+      <button data-mode="dur" aria-pressed="true">소요시간</button>
+      <button data-mode="arr" aria-pressed="false">도착시각</button>
+    </div>
     <canvas id="chart" aria-label="출발 시각별 예상 소요시간 그래프" role="img"></canvas>
   </div>
 
@@ -281,6 +278,11 @@ Object.keys(RAW).forEach(d => {
 });
 
 const fmt = m => `${Math.floor(m/60)}:${String(m%60).padStart(2,'0')}`;
+const durText = m => m>=60 ? `${Math.floor(m/60)}시간${m%60?' '+m%60+'분':''}` : `${m}분`;
+const durHTML = m => `${Math.floor(m/60)}<small>시간</small>${String(m%60).padStart(2,'0')}<small>분</small>`;
+const LV = {good:['good','원활'], mid:['mid','지체'], bad:['bad','정체']};
+const lvKey = (v,min) => v<=min+20 ? 'good' : v<=min+60 ? 'mid' : 'bad';
+const chip = (v,min) => { const [c,t]=LV[lvKey(v,min)]; return `<span class="chip ${c}">${t}</span>`; };
 const fmtDiff = m => m>=60 ? `${Math.floor(m/60)}시간 ${m%60?m%60+'분':''}`.trim() : `${m}분`;
 const clock = m => { const d=Math.floor(m/1440), r=m%1440; return `${d?'다음날 ':''}${String(Math.floor(r/60)).padStart(2,'0')}:${String(r%60).padStart(2,'0')}`; };
 const track = (ev,p) => { try{ window.posthog && posthog.capture(ev,p); }catch(e){} };
@@ -295,7 +297,7 @@ function kstDate(){
   try{ return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul'}).format(new Date()); }
   catch(e){ return ''; }
 }
-const state = { picked:false, from:'부산', to:'서울', lastCity:'부산', hour:kstHour(), date: kstDate() >= '2026-09-26' ? '0926' : '0925' };
+const state = { mode:'dur', picked:false, from:'부산', to:'서울', lastCity:'부산', hour:kstHour(), date: kstDate() >= '2026-09-26' ? '0926' : '0925' };
 
 const isHub = p => HUBS.includes(p);
 // 출발지에서 갈 수 있는 도착지: 수도권 요금소면 그 요금소를 쓰는 도시들, 지방 도시면 그 도시의 수도권 요금소
@@ -324,8 +326,9 @@ function current(){
 
 function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
 let colors = {};
-function readColors(){ colors = {good:css('--good'),mid:css('--mid'),bad:css('--bad'),sub:css('--sub'),line:css('--line'),card:css('--card'),ink:css('--ink')}; }
+function readColors(){ if(window.Chart){ Chart.defaults.font.family='"JetBrains Mono", Pretendard, monospace'; Chart.defaults.font.weight=500; } colors = {good:css('--good'),mid:css('--mid'),bad:css('--bad'),sub:css('--sub'),line:css('--line'),card:css('--card'),ink:css('--ink')}; }
 
+function textLevel(v,min){ const c=level(v,min); return c===colors.mid ? css('--mid-ink') : c===colors.good ? css('--good-ink') : c; }
 function level(v,min){ if(v==null) return colors.sub; if(v<=min+20) return colors.good; if(v<=min+60) return colors.mid; return colors.bad; }
 
 function toRanges(ok){
@@ -347,7 +350,7 @@ function fixHour(){
 function renderDates(){
   document.getElementById('dates').innerHTML = Object.keys(DATES).map(d =>
     `<button role="tab" data-date="${d}" aria-selected="${d===state.date}">${DATES[d].tab}</button>`).join('');
-  document.getElementById('subline').textContent = `${DATES[state.date].sub} · 출발 시각별 예상 소요시간`;
+  document.getElementById('subline').textContent = `${DATES[state.date].sub} · 시간대별 소요시간`;
 }
 function ranges(vals,min){
   const ok = vals.map(v => v!=null && v<=min+20);
@@ -370,20 +373,24 @@ function render(){
   const gaps = toRanges(vals.map(v=>v==null));
   document.getElementById('gapNote').textContent = gaps ? `${gaps}는 예보 미수집 구간이에요. ` : '';
   document.getElementById('verdict').innerHTML =
-    `<div><b>덜 막히는 출발: ${ranges(vals,min)}</b><small>이 시간대 출발 시 약 ${fmt(min)} 소요 (가장 빠른 수준)</small></div>`;
+    `<span class="chip good">원활</span><div><b>덜 막히는 출발 ${ranges(vals,min)}</b><small>이때 떠나면 소요시간 약 ${durText(min)}</small></div>`;
   document.getElementById('peakCard').innerHTML =
-    `<div class="k">피크 ${peakHour}시 출발</div><div class="v">${fmt(max)}</div><div class="h">최단보다 ${fmtDiff(max-min)} 더 걸림</div>`;
+    `<div class="k">가장 막히는 ${peakHour}시 출발</div><div class="v">${durHTML(max)} <span class="chip bad">정체</span></div><div class="h">최단보다 +${fmtDiff(max-min)}</div>`;
   renderSel();
 
-  const span = max - min;
-  const step = span <= 150 ? 30 : 60;
-  const yMin = Math.max(0, Math.floor((min-20)/step)*step);
-  const yMax = Math.ceil((max+10)/step)*step;
+  // y축은 노선(도시)별로 고정: 두 날짜 × 귀성/귀경 전체 값 기준 → 날짜·방향을 바꿔도 같은 눈금으로 비교
+  const arrMode = state.mode==='arr';
+  const toArr = arr => arr.map((v,h) => v==null ? null : h*60+v);
+  const all = Object.keys(DATA).flatMap(d => { const x=DATA[d][r.city]; return arrMode ? [...toArr(x.out), ...toArr(x.back)] : [...x.out, ...x.back]; }).filter(v=>v!=null);
+  const aMin = Math.min(...all), aMax = Math.max(...all);
+  const step = arrMode ? 180 : ((aMax - aMin) <= 150 ? 30 : 60);
+  const yMin = Math.max(0, Math.floor((aMin-20)/step)*step);
+  const yMax = Math.ceil((aMax+10)/step)*step;
 
   if(!chart){
     chart = new Chart(document.getElementById('chart'), {
       type:'line',
-      data:{ labels:[...Array(24).keys()], datasets:[{ data:vals }] },
+      data:{ labels:[...Array(24).keys()], datasets:[{ data:vals },{ data:[] }] },
       options:{
         responsive:true, maintainAspectRatio:false,
         animation:{duration:350},
@@ -394,31 +401,41 @@ function render(){
           x:{grid:{display:false},border:{color:colors.line},
              ticks:{color:colors.sub,autoSkip:false,maxRotation:0,font:{size:11},callback:(v,i)=> i%3===0?`${i}시`:''}},
           y:{grid:{color:colors.line},border:{display:false},
-             ticks:{color:colors.sub,font:{size:11},callback:v=>fmt(v)}}
+             ticks:{color:colors.sub,font:{size:11},callback:v=> state.mode==='arr' ? (v>=1440 ? `익일 ${Math.floor(v/60)%24}시` : `${Math.floor(v/60)}시`) : (v%60 ? `${Math.floor(v/60)}시간 반` : `${v/60}시간`)}}
         }
       },
       plugins:[selLine]
     });
   }
   const ds = chart.data.datasets[0];
+  const plot = arrMode ? toArr(vals) : vals;
+  // 도착시각 모드: '막힘 없을 때 도착' 기준선 + 사이를 칠해 지연을 보여줌
+  Object.assign(chart.data.datasets[1], {
+    data: arrMode ? vals.map((v,h)=> v==null?null:h*60+min) : [],
+    borderColor: colors.sub, borderWidth:1.5, borderDash:[4,4], pointRadius:0, fill:false, tension:.35, spanGaps:true
+  });
   Object.assign(ds, {
-    data: vals, spanGaps:true, tension:.35, borderWidth:3,
-    pointRadius: c => vals[c.dataIndex]==null ? 0 : (c.dataIndex===state.hour ? 7 : 3),
+    data: plot, spanGaps:true, tension:.35, borderWidth:2.5,
+    pointRadius: c => vals[c.dataIndex]==null ? 0 : (c.dataIndex===state.hour ? 6 : 0),
     pointHoverRadius:0,
     pointBackgroundColor: c => level(vals[c.dataIndex],min),
-    pointBorderColor: colors.card, pointBorderWidth:2,
+    pointBorderColor: c => c.dataIndex===state.hour ? css('--lane') : colors.card, pointBorderWidth: c => c.dataIndex===state.hour ? 3 : 2,
     segment:{
-      borderColor: c => level(Math.max(c.p0.parsed.y,c.p1.parsed.y),min),
+      borderColor: c => level(Math.max(vals[c.p0DataIndex],vals[c.p1DataIndex]),min),
       borderDash: c => (c.p1DataIndex - c.p0DataIndex > 1) ? [5,5] : undefined
     },
-    fill:true,
+    fill: arrMode ? '+1' : true,
     backgroundColor: c => {
+      if(arrMode) return colors.bad+'1F';
       const a = c.chart.chartArea; if(!a) return 'transparent';
       const g = c.chart.ctx.createLinearGradient(0,a.top,0,a.bottom);
-      g.addColorStop(0, colors.bad+'2A'); g.addColorStop(1, colors.good+'08'); return g;
+      g.addColorStop(0, colors.bad+'22'); g.addColorStop(1, colors.good+'10'); return g;
     }
   });
   chart.options.scales.y.min = yMin; chart.options.scales.y.max = yMax;
+  chart.options.scales.y.grid.color = colors.line;
+  chart.options.scales.y.title = {display:true, text: arrMode ? '도착 시각' : '소요시간', color:colors.sub, font:{size:11, family:'Inter, Pretendard, sans-serif', weight:600}, padding:{bottom:2}};
+  chart.options.scales.x.title = {display:true, text:'출발 시각', color:colors.sub, font:{size:11, family:'Inter, Pretendard, sans-serif', weight:600}, padding:{top:0}};
   chart.options.scales.y.ticks.stepSize = step;
   chart.update();
 }
@@ -432,8 +449,8 @@ function renderSel(){
   }else{
     const diff = v-min;
     const isNow = !state.picked && state.hour===kstHour() && state.date===(kstDate()>='2026-09-26'?'0926':'0925');
-    el.innerHTML = `<div class="k">${isNow ? `지금(${state.hour}시) 출발하면` : `${state.hour}시 출발하면`}</div><div class="v" style="color:${level(v,min)}">${fmt(v)}</div>`+
-      `<div class="h">도착 ${clock(state.hour*60+v)} · ${diff? '최단 +'+fmtDiff(diff) : '최단 시간'}</div>`;
+    el.innerHTML = `<div class="k">${isNow ? `지금 ${state.hour}시` : `${state.hour}시`} 출발</div><div class="v" style="color:${textLevel(v,min)}">${durHTML(v)} ${chip(v,min)}</div>`+
+      `<div class="h">도착 <b>${clock(state.hour*60+v)}</b></div>`;
   }
 }
 
@@ -441,7 +458,7 @@ const selLine = {
   id:'selLine',
   afterDatasetsDraw(c){
     const x = c.scales.x.getPixelForValue(state.hour), a = c.chartArea, ctx = c.ctx;
-    ctx.save(); ctx.strokeStyle = colors.ink; ctx.globalAlpha=.35; ctx.setLineDash([3,4]); ctx.lineWidth=1.5;
+    ctx.save(); ctx.strokeStyle = colors.ink; ctx.globalAlpha=.3; ctx.setLineDash([4,6]); ctx.lineWidth=2;
     ctx.beginPath(); ctx.moveTo(x,a.top); ctx.lineTo(x,a.bottom); ctx.stroke(); ctx.restore();
   }
 };
@@ -549,6 +566,15 @@ window.addEventListener('blur', () => {
 const $src = document.getElementById('srcLink');
 if(/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)) $src.href = 'https://apps.apple.com/kr/app/id1343545208';
 $src.addEventListener('click', () => track('source_clicked',{store: $src.href.includes('apple') ? 'ios' : 'android'}));
+
+// 그래프 기준 토글: 소요시간 ↔ 도착시각
+document.getElementById('modes').addEventListener('click', e => {
+  const b = e.target.closest('button[data-mode]'); if(!b || b.dataset.mode===state.mode) return;
+  state.mode = b.dataset.mode;
+  document.querySelectorAll('#modes button').forEach(x => x.setAttribute('aria-pressed', x===b));
+  render();
+  track('chart_mode_changed',{mode:state.mode, route:current().key, date:state.date});
+});
 
 // 만든 이유 시트
 const $about = document.getElementById('about');
